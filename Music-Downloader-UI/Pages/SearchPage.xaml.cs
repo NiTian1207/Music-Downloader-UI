@@ -1209,38 +1209,39 @@ namespace MusicDownloader.Pages
             player.MediaEnded += Player_MediaEnded;
         }
 
+        int SelectedItems_FirstIndex = -1;
+        bool SelectedItems_Checked = false;
+        bool SelectedItems_FirstDone = true;
+
         private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Console.WriteLine("List_SelectionChanged");
             int i = 0;
-            bool first = false;
-            if (List.SelectedItems.Count == 1)
+
+            if (List.SelectedItems.Count < 2)
             {
                 foreach (SearchListItemModel s in List.SelectedItems)
                 {
-                    if (s.IsSelected)
-                        counter_checked_item--;
-                    else
-                        counter_checked_item++;
-                    s.IsSelected = !s.IsSelected;
-                    s.OnPropertyChanged("IsSelected");
+                    int index = List.Items.IndexOf(s);
+                    if (index != SelectedItems_FirstIndex ||  SelectedItems_FirstDone)
+                    {
+                        SelectedItems_FirstIndex = index;
+                        SelectedItems_Checked = !s.IsSelected;
+                        SelectedItems_FirstDone = false;
+                    }
                 }
-                if((string)List.CurrentCell.Column.Header == " ")
+                if ((string)List.CurrentCell.Column.Header == " ")
                     skipselect = true;
             }
             else
             {
                 foreach (SearchListItemModel s in List.SelectedItems)
                 {
-                    if (i == 0 && List.SelectedItems.Count > 1)
+                    if (s.IsSelected != SelectedItems_Checked)
                     {
-                        i++;
-                        first = s.IsSelected;
-                        continue;
+                        s.IsSelected = SelectedItems_Checked;
+                        s.OnPropertyChanged("IsSelected");
                     }
-                    s.IsSelected = first;
-                    s.OnPropertyChanged("IsSelected");
-                    i++;
                 }
                 int count = 0;
                 foreach (SearchListItemModel s in SearchListItem)
@@ -1249,6 +1250,7 @@ namespace MusicDownloader.Pages
                         count++;
                 }
                 counter_checked_item = count;
+                SelectedItems_FirstDone = true;
             }
             UpdateUI_LoadingState("选中(" + counter_checked_item + "/" + SearchListItem.Count + ")");
         }
