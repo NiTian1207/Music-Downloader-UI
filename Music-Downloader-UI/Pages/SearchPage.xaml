@@ -31,6 +31,21 @@
         <DockPanel Grid.Row="3">
             <TextBlock Name="CurrentMusicLabel"  Text="当前无播放音乐" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Height="16" Margin="160 5 20 -10" Block.TextAlignment="Center"/>
             <TextBlock Text="..." Name="LoadingState"  Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="13" Height="16"  Margin="20 5 20 -10"/>
+            <DockPanel.ContextMenu>
+                <ContextMenu pu:ContextMenuHelper.CornerRadius="5" Width="200">
+                    <MenuItem x:Name="menu_label_Pause" Header="暂停/继续" Click="menu_Pause_Click"/>
+                    <MenuItem x:Name="menu_label_download" Header="下载" Click="menu_Label_download_Click"/>
+                    <MenuItem x:Name="menu_label_SelectAll" Header="选中" Click="menu_Label_Select_Click"/>
+                    <MenuItem x:Name="menu_label_FanSelect" Header="取消勾选" Click="menu_Label_unSelect_Click"/>
+                    <MenuItem x:Name="menu_label_MVUrl" Header="复制MV链接" Click="menu_Label_MVUrl_Click"/>
+                    <MenuItem x:Name="menu_label_Title" Header="复制标题" Click="menu_Label_Title_Click"/>
+                    <MenuItem x:Name="menu_label_Singer" Header="复制歌手" Click="menu_Label_Singer_Click"/>
+                    <MenuItem x:Name="menu_label_Album" Header="复制专辑" Click="menu_Label_Album_Click"/>
+                    <MenuItem x:Name="menu_label_Album3" Header="打开专辑" Click="menu_Label_Album3_Click"/>
+                    <MenuItem x:Name="menu_label_Album2" Header="打开专辑网页" Click="menu_Label_Album2_Click"/>
+                </ContextMenu>
+            </DockPanel.ContextMenu>
+
         </DockPanel>
         <DockPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0 0 0 0">
             <Label FontSize="13" Content="新歌榜" PreviewMouseDown="Label_PreviewMouseDown_1" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" TabIndex="6" Grid.Row="1" Width="49" Grid.RowSpan="2" Margin="2 0 2 0"/>
